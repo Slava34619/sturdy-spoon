@@ -87,7 +87,7 @@
   <!-- Форма заявки -->
   <section id="contact">
     <h2>Оформление заказа</h2>
-    <form id="order-form" enctype="multipart/form-data">
+   <!-- <form id="order-form" enctype="multipart/form-data">
       <label>Имя: <input type="text" name="name" required></label>
       <label>Email: <input type="email" name="email" required></label>
       <label>Телефон: <input type="tel" name="phone" required></label>
@@ -96,14 +96,21 @@
         <input type="file" name="company_card" accept=".pdf,.doc,.jpg,.png" required>
       </label>
       <button type="submit">Отправить заказ</button>
-    </form>
-	<!-- Не понимаю что заменить, оставлю закоментированным
+    </form>-->
+	<!-- Не понимаю что заменить, оставлю закоментированным-->
 	<form action="https://formsubmit.co/snabpromgroup@mail.ru" method="POST" enctype="multipart/form-data">
   <!-- остальные поля -->
-<!--  <input type="hidden" name="_captcha" value="false">
+	   <label>Имя: <input type="text" name="name" required></label>
+      <label>Email: <input type="email" name="email" required></label>
+      <label>Телефон: <input type="tel" name="phone" required></label>
+      <label>Комментарий: <textarea name="comment"></textarea></label>
+      <label>Карточка предприятия: 
+        <input type="file" name="company_card" accept=".pdf,.doc,.jpg,.png" required>
+      </label>
+  <input type="hidden" name="_captcha" value="false">
   <input type="hidden" name="_template" value="table">
   <button type="submit">Отправить заказ</button>
-</form> -->
+</form> 
 
 <script>
   const form = document.getElementById('order-form');
