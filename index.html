@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТехСнабПром - Резинотехнические изделия и промышленные материалы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media (max-width: 640px) {
+            #cart-modal .max-w-4xl {
+                max-width: 100vw;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .notification {
+            animation: slideIn 0.3s forwards, fadeOut 0.5s forwards 2.5s;
+        }
+        @keyframes slideIn {
+            from { right: -300px; }
+            to { right: 20px; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .carousel-item {
+            transition: transform 0.6s ease;
+        }
+        input[type="file"]::file-selector-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #1d4ed8;
+        }
+        .category-bg {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .category-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Notification -->
+    <div id="notification" class="notification hidden fixed top-20 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center">
+        <div id="notification-text"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gray-900 text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold">ТехСнабПром</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-blue-300">Главная</a>
+                    <a href="#categories" class="hover:text-blue-300">Каталог</a>
+                    <a href="#about" class="hover:text-blue-300">О нас</a>
+                    <a href="#contacts" class="hover:text-blue-300">Контакты</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="mailto:info@tehsnabprom.ru" class="hover:text-blue-300 hidden md:block">
+                        <i class="fas fa-envelope mr-1"></i> info@tehsnabprom.ru
+                    </a>
+                    
+                    <!-- Cart Icon -->
+                    <div id="cart-icon" class="relative cursor-pointer group">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 px-2 min-w-fit flex items-center justify-center hidden">0</span>
+                        <div class="absolute right-0 top-full mt-2 w-72 bg-white shadow-lg rounded-lg overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <div id="mini-cart" class="p-4 text-gray-800">
+                                <p class="text-center py-4">Корзина пуста</p>
+                            </div>
+                            <div class="bg-gray-100 p-3 border-t border-gray-200">
+                                <a href="#cart" class="block text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Оформить заказ</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <nav class="flex flex-col space-y-3">
+                    <a href="#home" class="hover:text-blue-300 px-2 py-1">Главная</a>
+                    <a href="#categories" class="hover:text-blue-300 px-2 py-1">Каталог</a>
+                    <a href="#about" class="hover:text-blue-300 px-2 py-1">О нас</a>
+                    <a href="#contacts" class="hover:text-blue-300 px-2 py-1">Контакты</a>
+                    <a href="mailto:info@tehsnabprom.ru" class="hover:text-blue-300 px-2 py-1">
+                        <i class="fas fa-envelope mr-1"></i> info@tehsnabprom.ru
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gray-800 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Резинотехнические изделия и промышленные материалы</h1>
+                    <p class="text-xl mb-6">Комплексное снабжение предприятий с 2005 года</p>
+                    <div class="flex space-x-4">
+                        <a href="#categories" class="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition duration-300">Каталог товаров</a>
+                        <a href="#contacts" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition duration-300">Контакты</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                         alt="Промышленные материалы"
+                         class="w-full h-auto rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Messengers -->
+    <div class="fixed right-4 bottom-4 z-40 flex flex-col space-y-3">
+        <a href="https://wa.me/79235254070" target="_blank" class="bg-green-600 text-white rounded-full p-3 shadow-lg hover:bg-green-700 transition">
+            <i class="fab fa-whatsapp text-xl"></i>
+        </a>
+        <a href="https://t.me/+79235254070" target="_blank" class="bg-blue-500 text-white rounded-full p-3 shadow-lg hover:bg-blue-600 transition">
+            <i class="fab fa-telegram text-xl"></i>
+        </a>
+        <a href="tel:+79235254070" target="_blank" class="bg-gray-800 text-white rounded-full p-3 shadow-lg hover:bg-gray-700 transition">
+            <i class="fas fa-phone text-xl"></i>
+        </a>
+    </div>
+
+    <!-- Features -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center px-4 py-6 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-truck text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Быстрая доставка</h3>
+                    <p class="text-gray-600">Отправка заказов в день оформления по всей России</p>
+                </div>
+                <div class="text-center px-4 py-6 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-medal text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Гарантия качества</h3>
+                    <p class="text-gray-600">Только проверенные производители с сертификатами</p>
+                </div>
+                <div class="text-center px-4 py-6 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-headset text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Персональный менеджер</h3>
+                    <p class="text-gray-600">Консультации по подбору продукции для ваших задач</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Категории товаров</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <a href="#rubber" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">Резинотехнические изделия</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 2 -->
+                <a href="#hoses" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">Рукава</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 3 -->
+                <a href="#asbestos" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">Асбест</h3>
+                    </div>
+                </a>
+                
+                <!-- Category 4 -->
+                <a href="#paronite" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">Паронит</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rubber Products -->
+    <section id="rubber" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Резинотехнические изделия</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=РТИ+1" alt="Резиновые уплотнители" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Резиновые уплотнители</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Уплотнительные кольца и прокладки из маслостойкой резины различных размеров.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">120 руб./шт</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=РТИ+2" alt="Резиновые амортизаторы" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Резиновые амортизаторы</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Амортизаторы для промышленного оборудования, устойчивые к вибрациям.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">350 руб./шт</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=РТИ+3" alt="Резиновые коврики" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Резиновые коврики</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Коврики из износостойкой резины для промышленных помещений.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">890 руб./м²</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=РТИ+4" alt="Резиновые втулки" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Резиновые втулки</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Втулки для валов и осей из износостойкой резины различных диаметров.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">210 руб./шт</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hoses Products -->
+    <section id="hoses" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Рукава</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Рукав+1" alt="Рукав напорный" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Рукав напорный</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Напорные рукава для воды и воздуха, диаметр 25 мм, рабочее давление 10 атм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">450 руб./м</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Рукав+2" alt="Рукав маслостойкий" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Рукав маслостойкий</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Маслостойкие рукава для перекачки нефтепродуктов, диаметр 32 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">680 руб./м</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Рукав+3" alt="Рукав кислотный" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Рукав кислотный</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Кислотостойкие рукава для химической промышленности, диаметр 20 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">750 руб./м</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Рукав+4" alt="Рукав газовый" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Рукав газовый</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Газовые рукава для пропана и бутана, диаметр 9 мм, рабочее давление 20 атм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">320 руб./м</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Asbestos Products -->
+    <section id="asbestos" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Асбест</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Асбест+1" alt="Асбестовый лист" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Асбестовый лист</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Листы асбестовые общего назначения, толщина 3 мм, размер 1000×1000 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">1200 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Асбест+2" alt="Асбестовый шнур" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Асбестовый шнур</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Шнур асбестовый для уплотнения, диаметр 5 мм, длина 10 м.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">85 руб./м</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Асбест+3" alt="Асбестовая ткань" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Асбестовая ткань</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Ткань асбестовая огнеупорная, плотность 1200 г/м², ширина 1000 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">650 руб./м²</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Асбест+4" alt="Асбестовый картон" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Асбестовый картон</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Картон асбестовый теплоизоляционный, толщина 5 мм, размер 1000×1000 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">950 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paronite Products -->
+    <section id="paronite" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8">Паронит</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Паронит+1" alt="Паронит ПОН-Б" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Паронит ПОН-Б</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Паронит общего назначения, толщина 1 мм, размер 1500×1500 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">1100 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Паронит+2" alt="Паронит МБ" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Паронит МБ</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Паронит маслобензостойкий, толщина 2 мм, размер 1500×1500 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">1300 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Паронит+3" alt="Паронит ПМБ" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Паронит ПМБ</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Паронит пищевой, толщина 1.5 мм, размер 1500×1500 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">1400 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                    <div class="p-4 flex flex-col h-full">
+                        <div class="mb-4 flex items-center justify-center bg-gray-100" style="height: 180px;">
+                            <img src="https://via.placeholder.com/300x300?text=Паронит+4" alt="Паронит листовой" class="max-h-full max-w-full object-contain rounded-lg">
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Паронит листовой</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-grow">Паронит общего назначения, толщина 3 мм, размер 1500×1500 мм.</p>
+                        <div class="mt-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold">1600 руб./лист</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button class="decrement-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg">-</button>
+                                    <input type="number" value="1" min="1" class="quantity-input w-24 text-center border-t border-b border-gray-300 px-2 py-1">
+                                    <button class="increment-btn px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg">+</button>
+                                </div>
+                                <button class="add-to-cart-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                                    <i class="fas fa-shopping-cart mr-2"></i> В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h2 class="text-3xl font-bold mb-6">О нашей компании</h2>
+                    <p class="text-gray-700 mb-6">Компания "ТехСнабПром" уже более 18 лет специализируется на поставках резинотехнических изделий и промышленных материалов для предприятий различных отраслей промышленности.</p>
+                    <p class="text-gray-700 mb-6">Наша миссия - обеспечить клиентов качественной продукцией по доступным ценам с индивидуальным подходом к каждому заказу.</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-blue-600 mb-2">
+                                <i class="fas fa-award text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">18+ лет</p>
+                            <p class="text-sm text-gray-600">Опыта работы</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <div class="text-blue-600 mb-2">
+                                <i class="fas fa-users text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">1000+</p>
+                            <p class="text-sm text-gray-600">Клиентов</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
+                          alt="О нас"
+                          class="rounded-lg shadow-md h-48 object-cover w-full">
+                    <img src="https://images.unsplash.com/photo-1590402494682-cd3fb53b1f70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                          alt="О нас"
+                          class="rounded-lg shadow-md h-48 object-cover w-full">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+                          alt="О нас"
+                          class="rounded-lg shadow-md h-48 object-cover w-full">
+                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
+                          alt="О нас"
+                          class="rounded-lg shadow-md h-48 object-cover w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 h-full max-h-screen flex flex-col">
+                <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-2xl font-bold">Ваш заказ</h3>
+                    <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+              
+                <div class="flex-grow px-6 overflow-y-auto" style="min-height:0;">
+                    <div id="cart-items" class="divide-y divide-gray-200">
+                        <!-- Cart items will be loaded here dynamically -->
+                        <p class="py-8 text-center text-gray-500">Ваша корзина пуста</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 border-t border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <p class="font-semibold">Итого:</p>
+                            <p id="cart-grand-total" class="text-2xl font-bold">0 руб.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="clear-cart" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">Очистить</button>
+                            <button id="checkout-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>Оформить заказ</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Checkout Form -->
+                    <div id="checkout-form" class="hidden">
+                        <h4 class="text-lg font-semibold mb-4">Контактные данные</h4>
+                        <form id="order-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Имя*</label>
+                                    <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+                                    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Телефон*</label>
+                                    <input type="tel" id="phone" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="comment" class="block text-sm font-medium text-gray-700 mb-1">Комментарий</label>
+                                    <textarea id="comment" name="comment" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="file" class="block text-sm font-medium text-gray-700 mb-1">Прикрепить карточку предприятия</label>
+                                <input type="file" id="file" name="file" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                <p class="mt-1 text-xs text-gray-500">Поддерживаются файлы PDF, DOC, JPG, PNG и другие (до 10 МБ)</p>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium transition duration-300 flex items-center justify-center">
+                                    <i class="fas fa-paper-plane mr-2"></i> Отправить заказ
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts -->
+    <section id="contacts" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Наши контакты</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="bg-gray-100 p-8 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-6">Обратная связь</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-1">Ваше имя</label>
+                                <input type="text" id="contact-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="contact-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="contact-message" class="block text-sm font-medium text-gray-700 mb-1">Сообщение</label>
+                                <textarea id="contact-message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg font-medium transition duration-300">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="h-full bg-gray-100 p-8 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4">Контактная информация</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Адрес:</p>
+                                    <p class="text-gray-700">г. Москва, ул. Промышленная, д. 15</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Email:</p>
+                                    <a href="mailto:info@tehsnabprom.ru" class="text-blue-600 hover:underline">info@tehsnabprom.ru</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Телефон:</p>
+                                    <a href="tel:+79235254070" class="text-blue-600 hover:underline">+7 923 525-40-70</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-blue-600 mr-3 mt-1">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Режим работы:</p>
+                                    <p class="text-gray-700">Пн-Пт: 8:00 - 20:00</p>
+                                    <p class="text-gray-700">Сб-Вс: 9:00 - 18:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold mb-4">Связаться через мессенджеры</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://wa.me/79235254070" target="_blank" class="bg-green-500 hover:bg-green-600 text-white rounded-full p-3 transition">
+                                    <i class="fab fa-whatsapp text-xl"></i>
+                                </a>
+                                <a href="https://t.me/+79235254070" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 transition">
+                                    <i class="fab fa-telegram text-xl"></i>
+                                </a>
+                                <a href="tel:+79235254070" target="_blank" class="bg-gray-800 hover:bg-gray-700 text-white rounded-full p-3 transition">
+                                    <i class="fas fa-phone text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">ТехСнабПром</h3>
+                    <p class="text-gray-400 mb-4">Снабжение предприятий резинотехническими изделиями и промышленными материалами.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://wa.me/79235254070" target="_blank" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                        <a href="https://t.me/+79235254070" target="_blank" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="tel:+79235254070" target="_blank" class="text-gray-400 hover:text-white transition">
+                            <i class="fas fa-phone text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Меню</h3>
+                    <nav class="space-y-2">
+                        <a href="#home" class="block text-gray-400 hover:text-white transition">Главная</a>
+                        <a href="#categories" class="block text-gray-400 hover:text-white transition">Каталог</a>
+                        <a href="#about" class="block text-gray-400 hover:text-white transition">О компании</a>
+                        <a href="#contacts" class="block text-gray-400 hover:text-white transition">Контакты</a>
+                    </nav>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Контакты</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-gray-400"></i>
+                            <span class="text-gray-400">г. Москва, ул. Промышленная, д. 15</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2 text-gray-400"></i>
+                            <a href="mailto:info@tehsnabprom.ru" class="text-gray-400 hover:text-white transition">info@tehsnabprom.ru</a>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-2 text-gray-400"></i>
+                            <a href="tel:+79235254070" class="text-gray-400 hover:text-white transition">+7 923 525-40-70</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 ТехСнабПром. Все права защищены.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Политика конфиденциальности</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition">Условия использования</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Резиновые уплотнители",
+                category: "Резинотехнические изделия",
+                image: "https://via.placeholder.com/300x300?text=РТИ+1",
+                description: "Уплотнительные кольца и прокладки из маслостойкой резины различных размеров.",
+                price: 120,
+                unit: "шт"
+            },
+            {
+                id: 2,
+                name: "Резиновые амортизаторы",
+                category: "Резинотехнические изделия",
+                image: "https://via.placeholder.com/300x300?text=РТИ+2",
+                description: "Амортизаторы для промышленного оборудования, устойчивые к вибрациям.",
+                price: 350,
+                unit: "шт"
+            },
+            {
+                id: 3,
+                name: "Резиновые коврики",
+                category: "Резинотехнические изделия",
+                image: "https://via.placeholder.com/300x300?text=РТИ+3",
+                description: "Коврики из износостойкой резины для промышленных помещений.",
+                price: 890,
+                unit: "м²"
+            },
+            {
+                id: 4,
+                name: "Резиновые втулки",
+                category: "Резинотехнические изделия",
+                image: "https://via.placeholder.com/300x300?text=РТИ+4",
+                description: "Втулки для валов и осей из износостойкой резины различных диаметров.",
+                price: 210,
+                unit: "шт"
+            },
+            {
+                id: 5,
+                name: "Рукав напорный",
+                category: "Рукава",
+                image: "https://via.placeholder.com/300x300?text=Рукав+1",
+                description: "Напорные рукава для воды и воздуха, диаметр 25 мм, рабочее давление 10 атм.",
+                price: 450,
+                unit: "м"
+            },
+            {
+                id: 6,
+                name: "Рукав маслостойкий",
+                category: "Рукава",
+                image: "https://via.placeholder.com/300x300?text=Рукав+2",
+                description: "Маслостойкие рукава для перекачки нефтепродуктов, диаметр 32 мм.",
+                price: 680,
+                unit: "м"
+            },
+            {
+                id: 7,
+                name: "Рукав кислотный",
+                category: "Рукава",
+                image: "https://via.placeholder.com/300x300?text=Рукав+3",
+                description: "Кислотостойкие рукава для химической промышленности, диаметр 20 мм.",
+                price: 750,
+                unit: "м"
+            },
+            {
+                id: 8,
+                name: "Рукав газовый",
+                category: "Рукава",
+                image: "https://via.placeholder.com/300x300?text=Рукав+4",
+                description: "Газовые рукава для пропана и бутана, диаметр 9 мм, рабочее давление 20 атм.",
+                price: 320,
+                unit: "м"
+            },
+            {
+                id: 9,
+                name: "Асбестовый лист",
+                category: "Асбест",
+                image: "https://via.placeholder.com/300x300?text=Асбест+1",
+                description: "Листы асбестовые общего назначения, толщина 3 мм, размер 1000×1000 мм.",
+                price: 1200,
+                unit: "лист"
+            },
+            {
+                id: 10,
+                name: "Асбестовый шнур",
+                category: "Асбест",
+                image: "https://via.placeholder.com/300x300?text=Асбест+2",
+                description: "Шнур асбестовый для уплотнения, диаметр 5 мм, длина 10 м.",
+                price: 85,
+                unit: "м"
+            },
+            {
+                id: 11,
+                name: "Асбестовая ткань",
+                category: "Асбест",
+                image: "https://via.placeholder.com/300x300?text=Асбест+3",
+                description: "Ткань асбестовая огнеупорная, плотность 1200 г/м², ширина 1000 мм.",
+                price: 650,
+                unit: "м²"
+            },
+            {
+                id: 12,
+                name: "Асбестовый картон",
+                category: "Асбест",
+                image:
+</body>
+</html>
