@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Название категории | ПромКаталог</title>
+  <meta name="description" content="Описание категории товаров, которые вы можете купить с доставкой.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">ПромКаталог</div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="rubber.html">РТИ</a></li>
+      <li><a href="hoses.html">Рукава</a></li>
+      <li><a href="asbestos.html">Асбест</a></li>
+      <li><a href="paronite.html">Паронит</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="category">
+  <h2>Название категории</h2>
+  <div class="category-list">
+
+    <!-- ===== Карточка товара (копируйте столько, сколько нужно) ===== -->
+    <div class="product-card">
+      <img src="img/пример.jpg" alt="Название товара" loading="lazy">
+      <h4>Название товара</h4>
+      <p>Краткое описание товара, характеристики</p>
+      <p class="price">Цена: 999 ₽</p>
+      <input type="number" value="1" min="1">
+      <button class="add-to-cart">В корзину</button>
+    </div>
+
+    <!-- Добавляйте сюда другие товары по образцу -->
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 ПромКаталог</p>
+</footer>
+
+<script>
+const cart = [];
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.product-card');
+    const name = card.querySelector('h4').textContent;
+    const price = parseInt(card.querySelector('.price').textContent.replace(/\D/g, ''));
+    const quantity = parseInt(card.querySelector('input').value);
+    cart.push({ name, price, quantity });
+    btn.textContent = 'Добавлено';
+  });
+});
+</script>
+
+</body>
+</html>
