@@ -11,7 +11,7 @@
             #cart-modal .max-w-4xl {
                 max-width: 100vw;
                 max-height: 90vh;
-                overflow-y: auto;
+                overflow-y-auto;
             }
         }
         
@@ -48,9 +48,11 @@
             background-color: #1d4ed8;
         }
         .category-bg {
-            background-size: cover;
+            background-size: contain; /* Показывает все изображение без обрезки */
             background-position: center;
             position: relative;
+			background-repeat: no-repeat; /* Добавьте это */
+    background-color: white; /* Фон на случай пустого пространства */
         }
         .category-bg::before {
             content: '';
@@ -59,8 +61,104 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+			z-index: 1;
         }
+        
+        /* Стили для карусели в шапке */
+        .header-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .header-carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .header-carousel-slide.active {
+            display: block;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+        .header-carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .header-carousel-control.prev {
+            left: 10px;
+        }
+        .header-carousel-control.next {
+            right: 10px;
+        }
+        .header-carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .header-carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        .header-carousel-indicator.active {
+            background: white;
+        }
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+		
+		@media (max-width: 768px) {
+    .category-bg {
+        background-size: auto 90%; /* Уменьшите немного для мобильных */
+    }
+}
+        
+        /* Адаптивность для шапки */
+        @media (max-width: 768px) {
+            .header-promo {
+                display: none;
+            }
+        }
+		/* Выделение НДС */
+		.vat-info {
+  color: #666;
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
     </style>
 </head>
 <body class="bg-gray-50">
@@ -70,7 +168,7 @@
     </div>
 
     <!-- Header -->
-    <header class="bg-gray-900 text-white shadow-md">
+    <header class="bg-blue-800 text-white shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
@@ -86,7 +184,7 @@
                 </nav>
                 
                 <div class="flex items-center space-x-4">
-                    <a href="mailto:info@tehsnabprom.ru" class="hover:text-blue-300 hidden md:block">
+                    <a href="mailto:snabpromgroup@mail.ru" class="hover:text-blue-300 hidden md:block">
                         <i class="fas fa-envelope mr-1"></i> snabpromgroup@mail.ru
                     </a>
                     
@@ -126,23 +224,113 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="bg-gray-800 text-white py-16">
+    <!-- Hero Section with Promo -->
+    <section id="home" class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4"><!--Средства защиты и сопутствующие товары--></h1>
-                    <p class="text-xl mb-6">Комплексное снабжение предприятий с 2005 года</p>
-                    <div class="flex space-x-4">
-                        <a href="#categories" class="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition duration-300">Каталог товаров</a>
-                        <a href="#contacts" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition duration-300">Контакты</a>
+            <div class="flex flex-col md:flex-row items-center header-promo">
+                <!-- Левая часть - информация о скидках -->
+                <div class="md:w-2/5 mb-6 md:mb-0 md:pr-8">
+                    <h2 class="text-3xl font-bold mb-4">Специальные предложения</h2>
+                    <p class="text-xl mb-4">Только до конца месяца скидки до 20% на средства защиты</p>
+                    <div class="bg-red-600 inline-block px-4 py-2 rounded-lg mb-4">
+                        <span class="font-bold text-2xl">СКИДКА 20%</span>
+                        <span class="block text-sm"></span>
+                    </div>
+                    <p class="mt-4">Оставьте заявку и наш менеджер свяжется с вами для оформления заказа со скидкой</p>
+                    <button class="mt-4 bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition duration-300">
+                        Получить скидку
+                    </button>
+                </div>
+                
+                <!-- Правая часть - карусель акционных товаров -->
+                <div class="md:w-3/5">
+                    <div class="header-carousel-container">
+                        <!-- Slide 1 -->
+                        <div class="header-carousel-slide active relative">
+                            <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Акционный товар" class="w-full h-full object-cover">
+                            <div class="discount-badge">-20%</div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold">Перчатки обливные</h3>
+                                <p class="line-through">150 руб.</p>
+                                <p class="text-2xl font-bold">120 руб.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="header-carousel-slide relative">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Акционный товар" class="w-full h-full object-cover">
+                            <div class="discount-badge">-15%</div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold">Перчатки ХБ</h3>
+                                <p class="line-through">100 руб.</p>
+                                <p class="text-2xl font-bold">85 руб.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3 -->
+                        <div class="header-carousel-slide relative">
+                            <img src="https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Акционный товар" class="w-full h-full object-cover">
+                            <div class="discount-badge">-25%</div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold">Верхонки</h3>
+                                <p class="line-through">200 руб.</p>
+                                <p class="text-2xl font-bold">150 руб.</p>
+                            </div>
+                        </div>
+						<!-- Slide 4 -->
+                        <div class="header-carousel-slide relative">
+                            <img src="https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Акционный товар" class="w-full h-full object-cover">
+                            <div class="discount-badge">-25%</div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold">Вафельное полотно</h3>
+                                <p class="line-through">120 руб.</p>
+                                <p class="text-2xl font-bold">80 руб.</p>
+                            </div>
+                        </div>
+						<!-- Slide 5 -->
+                        <div class="header-carousel-slide relative">
+                            <img src="https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Акционный товар" class="w-full h-full object-cover">
+                            <div class="discount-badge">-25%</div>
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold">Комбинезоны MicroMAX NS р. XXL</h3>
+                                <p class="line-through">1200 руб.</p>
+                                <p class="text-2xl font-bold">750 руб.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls -->
+                        <button class="header-carousel-control prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="header-carousel-control next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        
+                        <!-- Indicators -->
+                        <div class="header-carousel-indicators">
+                            <div class="header-carousel-indicator active"></div>
+                            <div class="header-carousel-indicator"></div>
+                            <div class="header-carousel-indicator"></div>
+							<div class="header-carousel-indicator"></div>
+							<div class="header-carousel-indicator"></div>
+                        </div>
                     </div>
                 </div>
-               <!-- <div class="md:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80"
-                         alt="Промышленные материалы" 
-                         class="w-full h-auto rounded-lg shadow-xl">
-                </div>-->
+            </div>
+            
+            <!-- Для мобильных устройств - обычный заголовок -->
+            <div class="md:hidden text-center">
+                <h1 class="text-3xl font-bold mb-4">Средства защиты и промышленные материалы</h1>
+                <p class="text-lg mb-6">Комплексное снабжение предприятий с 2005 года</p>
+                <div class="flex flex-col space-y-4">
+                    <a href="#categories" class="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition duration-300">Каталог товаров</a>
+                    <a href="#contacts" class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 rounded-lg font-medium transition duration-300">Контакты</a>
+                </div>
             </div>
         </div>
     </section>
@@ -168,8 +356,15 @@
                     <div class="text-blue-600 mb-4">
                         <i class="fas fa-truck text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Быстрая доставка</h3>
-                    <p class="text-gray-600">Отправка заказов в день оформления по всей России</p>
+                    <h3 class="text-xl font-semibold mb-2">Бесплатная доставка</h3>
+                    <p class="text-gray-600">Бесплатная и оперативная доставка по г. Кемерово.</p>
+                </div>
+				<div class="text-center px-4 py-6 rounded-lg border border-gray-200">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-rouble text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Отсрочка</h3>
+                    <p class="text-gray-600">С постоянным клиентами возможно подписание договора отсрочки платежа.</p>
                 </div>
                 <div class="text-center px-4 py-6 rounded-lg border border-gray-200">
                     <div class="text-blue-600 mb-4">
@@ -178,13 +373,13 @@
                     <h3 class="text-xl font-semibold mb-2">Гарантия качества</h3>
                     <p class="text-gray-600">Только проверенные производители с сертификатами</p>
                 </div>
-                <div class="text-center px-4 py-6 rounded-lg border border-gray-200">
+                <!--<div class="text-center px-4 py-6 rounded-lg border border-gray-200">
                     <div class="text-blue-600 mb-4">
                         <i class="fas fa-headset text-3xl"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Персональный менеджер</h3>
                     <p class="text-gray-600">Консультации по подбору продукции для ваших задач</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -197,144 +392,106 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Category 1 -->
                 <a href="rubber.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/СВС Двойной латексный облив глубокое макание 3 4.jpeg')">
                         <h3 class="text-2xl font-bold text-white relative z-10">Перчатки обливные</h3>
                     </div>
                 </a>
                 
                 <!-- Category 2 -->
                 <a href="Рукава.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/Перчаткиб с пвх.png')">
                         <h3 class="text-2xl font-bold text-white relative z-10">Перчатки ХБ</h3>
                     </div>
                 </a>
                 
                 <!-- Category 3 -->
                 <a href="Асбест.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/Верхонки с брезентовым наладонником рабочие.jpg')">
                         <h3 class="text-2xl font-bold text-white relative z-10">Верхонки</h3>
                     </div>
                 </a>
                 
                 <!-- Category 4 -->
                 <a href="Паронит.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/вафельное полотно вафельная ткань.jpg')">
                         <h3 class="text-2xl font-bold text-white relative z-10">Вафельное полотно</h3>
                     </div>
                 </a>
-				
-				<!-- Category 5 -->
+                
+                <!-- Category 5 -->
                 <a href="Паронит.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
-                        <h3 class="text-2xl font-bold text-white relative z-10">Нетканное полотно</h3>
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/Нетканное полотно ХПП.png')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">ХПП Нетканное полотно</h3>
                     </div>
                 </a>
-				
-				<!-- Category 6 -->
+                
+                <!-- Category 6 -->
                 <a href="Паронит.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
-                        <h3 class="text-2xl font-bold text-white relative z-10">Мешки для строительного мусора</h3>
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/Ветошь трикотаж.png')">
+                        <h3 class="text-2xl font-bold text-white relative z-10">Ветошь</h3>
                     </div>
                 </a>
-				
-				<!-- Category 7 -->
+                
+                <!-- Category 7 -->
                 <a href="Паронит.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('file:///C:/Users/malas/Desktop/images/Комбинезон Lakeland MicroMax NS р. 2XL.png')">
                         <h3 class="text-2xl font-bold text-white relative z-10">Комбинезоны защитные</h3>
                     </div>
                 </a>
-				<!-- Category 8 -->
+                <!-- Category 8 -->
                 <a href="Паронит.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80')">
-                        <h3 class="text-2xl font-bold text-white relative z-10">Герметики</h3>
+                    <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('')">
+                        <h3 class="text-2xl font-bold text-white relative z-10"></h3>
                     </div>
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- Popular Products -->
+    <section id="popular" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Популярные товары</h2>
+            <div id="popular-products" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Товар 1 -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col product-card">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Перчатки обливные" class="mb-4 rounded h-48 object-cover">
+                    <h3 class="text-lg font-semibold">Перчатки обливные</h3>
+                    <p class="text-gray-600 text-sm mb-4">Прочные перчатки с защитным покрытием для различных работ.</p>
+                    <span class="text-xl font-bold mb-4">120 руб./шт</span>
+					<div class="vat-info text-gray-500 text-xs mb-4">Включая НДС 20%</div>
+                    <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto" data-id="1" data-name="Перчатки обливные" data-price="120" data-image="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80">В корзину</button>
+                </div>
 
-     <!-- Categories КАК СЮДА ДОБАВИТЬ ПОПУЛЯРНЫЕ ТОВАРЫ?-->
-    
-<!-- Popular Products -->
-<section id="popular" class="py-12 bg-white">
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">Популярные товары</h2>
-    <div id="popular-products" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-       <!-- Товар 1 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+1" alt="Резиновые уплотнители" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые уплотнители</h3>
-                <p class="text-gray-600 text-sm mb-4">Уплотнительные кольца и прокладки из маслостойкой резины различных размеров.</p>
-                <span class="text-xl font-bold mb-4">120 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
+                <!-- Товар 2 -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col product-card">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c crop&w=880&q=80" alt="Перчатки ХБ" class="mb-4 rounded h-48 object-cover">
+                    <h3 class="text-lg font-semibold">Перчатки ХБ</h3>
+                    <p class="text-gray-600 text-sm mb-4">Хлопчатобумажные перчатки для легких работ.</p>
+                    <span class="text-xl font-bold mb-4">85 руб./шт</span>
+                    <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto" data-id="2" data-name="Перчатки ХБ" data-price="85" data-image="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80">В корзину</button>
+                </div>
 
-            <!-- Товар 2 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+2" alt="Резиновые амортизаторы" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые амортизаторы</h3>
-                <p class="text-gray-600 text-sm mb-4">Амортизаторы для промышленного оборудования, устойчивые к вибрациям.</p>
-                <span class="text-xl font-bold mb-4">350 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
+                <!-- Товар 3 -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col product-card">
+                    <img src="https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Верхонки" class="mb-4 rounded h-48 object-cover">
+                    <h3 class="text-lg font-semibold">Верхонки</h3>
+                    <p class="text-gray-600 text-sm mb-4">Теплые и прочные верхонки для холодной погоды.</p>
+                    <span class="text-xl font-bold mb-4">150 руб./шт</span>
+                    <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto" data-id="3" data-name="Верхонки" data-price="150" data-image="https://images.unsplash.com/photo-1581093450023-fcf1282e48b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80">В корзину</button>
+                </div>
 
-            <!-- Товар 3 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+3" alt="Резиновые коврики" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые коврики</h3>
-                <p class="text-gray-600 text-sm mb-4">Коврики из износостойкой резины для промышленных помещений.</p>
-                <span class="text-xl font-bold mb-4">890 руб./м²</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
+                <!-- Товар 4 -->
+                <div class="bg-white rounded-lg shadow-md p-4 flex flex-col product-card">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Вафельное полотно" class="mb-4 rounded h-48 object-cover">
+                    <h3 class="text-lg font-semibold">Вафельное полотно</h3>
+                    <p class="text-gray-600 text-sm mb-4">Качественное вафельное полотно для различных нужд.</p>
+                    <span class="text-xl font-bold mb-4">250 руб./м</span>
+                    <button class="add-to-cart bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto" data-id="4" data-name="Вафельное полотно" data-price="250" data-image="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80">В корзину</button>
+                </div>
             </div>
-
-            <!-- Товар 4 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+4" alt="Резиновые втулки" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые втулки</h3>
-                <p class="text-gray-600 text-sm mb-4">Втулки для валов и осей из износостойкой резины различных диаметров.</p>
-                <span class="text-xl font-bold mb-4">210 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
-			 <!-- Товар 5 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+1" alt="Резиновые уплотнители" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые уплотнители</h3>
-                <p class="text-gray-600 text-sm mb-4">Уплотнительные кольца и прокладки из маслостойкой резины различных размеров.</p>
-                <span class="text-xl font-bold mb-4">120 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
-
-            <!-- Товар 6 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+2" alt="Резиновые амортизаторы" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые амортизаторы</h3>
-                <p class="text-gray-600 text-sm mb-4">Амортизаторы для промышленного оборудования, устойчивые к вибрациям.</p>
-                <span class="text-xl font-bold mb-4">350 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
-
-            <!-- Товар 7 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+3" alt="Резиновые коврики" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые коврики</h3>
-                <p class="text-gray-600 text-sm mb-4">Коврики из износостойкой резины для промышленных помещений.</p>
-                <span class="text-xl font-bold mb-4">890 руб./м²</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
-
-            <!-- Товар 8 -->
-            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                <img src="https://via.placeholder.com/300x300?text=РТИ+4" alt="Резиновые втулки" class="mb-4 rounded h-48 object-contain">
-                <h3 class="text-lg font-semibold">Резиновые втулки</h3>
-                <p class="text-gray-600 text-sm mb-4">Втулки для валов и осей из износостойкой резины различных диаметров.</p>
-                <span class="text-xl font-bold mb-4">210 руб./шт</span>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-auto">В корзину</button>
-            </div>
-    </div>
-  </div>
-</section>
-
+        </div>
+    </section>
 
     <!-- Cart Modal -->
     <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
@@ -555,83 +712,268 @@
         </div>
     </footer>
 
- <!--  <script>
-        // Product Data
-		
-        const products = [
-            {
-                id: 1,
-                name: "Перчатки х/б двойной латексный облив 13 класс, желто-зеленый (Минпромторг)",
-                category: "Перчатки обливные",
-                image: "foto/SVS.png",
-                description: "Перчатки из хлопка с двухслойным покрытием из натурального латекса. Латексное покрытие защищает от механических воздействий, обеспечивая высокую износостойкость.",
-                price: 39,
-                unit: "пара"
-            },
-            {
-                id: 2,
-                name: "Перчатки хб двойной латексный облив 3/4, 13 класс, желто-красный (Минпромторг)",
-                category: "Перчатки обливные",
-                image: "foto/Перчатки хб двойной латексный облив 34, 13 класс, красные (Минпромторг.jpg",
-                description: "Перчатки из хлопка с двухслойным покрытием ¾ из натурального латекса,с дополнительной защитой тыльной стороны ладони.",
-                price: 59,
-                unit: "пара"
-            },
-            {
-                id: 3,
-                name: "Верхонки рабочие",
-                category: "Верхонки",
-                image: "foto/Верхонки с брезентовым наладонником рабочие.jpg",
-                description: "Прочные рабочие верхонки из высококачественного материала. Защита от холода и механических повреждений.",
-                price: 56,
-                unit: "пара"
-            },
-		 {
-                id: 4,
-                name: "Перчатки ХБ с ПВХ Экстра",
-                category: "Перчатки ХБ",
-                image: "foto/Перчатки рабочие ХБ с ПВХ.png",
-                description: "Перчатки х/б ПВХ черные повыш плотности  р 9 Экстра (Минпромторг)",
-                price: 34,
-                unit: "пара"
-            },
-                 {
-                id: 5,
-                name: "Перчатки ХБ с ПВХ Премиум",
-                category: "Перчатки ХБ",
-                image: "foto/Перчатки рабочие ХБ с ПВХ.png",
-                description: "Перчатки х/б с ПВХ черные Премиум р 10 7 класс",
-                price: 37,
-                unit: "пара"
-            },
-		  {
-                id: 5,
-                name: "Комбинезоны MicroMAX NS",
-                category: "other-gloves",
-                image: "foto/Перчатки рабочие ХБ с ПВХ.png",
-                description: "MicroMAX NS XXL",
-                price: 710,
-                unit: "шт" 
-            },
-                 {
-                id: 6,
-                name: "Вафельное полотно. Плотность 230 ± 10 г/м2",
-                category: "Вафельное полотно",
-                image: "foto/вафельное полотно вафельная ткань.jpg",
-                description: "Вафельное полотно, ширина 45см, длина 60м. Высококачественный материал для различных нужд.",
-                price: 4800,
-                unit: "рулон"
-            },
-            {
-                id: 7,
-                name: "Нетканое полотно",
-                category: "Нетканое полотно",
-                image: "foto/ХПП нетканное полотно.jpeg",
-                description: "Нетканое полотно высокой плотности. Ширина 140см, длина 60м.",
-                price: 4200,
-                unit: "рулон"
-            },
-        ];
-				</script> -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Cart functionality
+        let cart = [];
+        const cartIcon = document.getElementById('cart-icon');
+        const cartCount = document.getElementById('cart-count');
+        const cartModal = document.getElementById('cart-modal');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartGrandTotal = document.getElementById('cart-grand-total');
+        const clearCartBtn = document.getElementById('clear-cart');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutForm = document.getElementById('checkout-form');
+        const orderForm = document.getElementById('order-form');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+
+        // Add to cart buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+                const image = this.dataset.image;
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                showNotification(`Товар "${name}" добавлен в корзину`);
+            });
+        });
+
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            totalItems > 0 ? cartCount.classList.remove('hidden') : cartCount.classList.add('hidden');
+            
+            // Update cart items
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="py-8 text-center text-gray-500">Ваша корзина пуста</p>';
+                checkoutBtn.disabled = true;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="py-4 flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                        <div class="ml-4 flex-grow">
+                            <h4 class="font-medium">${item.name}</h4>
+                            <p class="text-gray-600">${item.price} руб./шт</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="decrease-quantity w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center" data-id="${item.id}">-</button>
+                            <span class="mx-2">${item.quantity}</span>
+                            <button class="increase-quantity w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center" data-id="${item.id}">+</button>
+                        </div>
+                        <div class="ml-4">
+                            <span class="font-medium">${(item.price * item.quantity).toFixed(2)} руб.</span>
+                        </div>
+                        <button class="remove-from-cart ml-4 text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+                
+                checkoutBtn.disabled = false;
+                
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.dataset.id;
+                        const item = cart.find(item => item.id === id);
+                        item.quantity += 1;
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.dataset.id;
+                        const item = cart.find(item => item.id === id);
+                        if (item.quantity > 1) {
+                            item.quantity -= 1;
+                        } else {
+                            cart = cart.filter(item => item.id !== id);
+                        }
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.remove-from-cart').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.dataset.id;
+                        cart = cart.filter(item => item.id !== id);
+                        updateCart();
+                        showNotification('Товар удален из корзины');
+                    });
+                });
+            }
+            
+            // Update grand total
+            const grandTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            cartGrandTotal.textContent = `${grandTotal.toFixed(2)} руб.`;
+            
+            // Update mini cart
+            const miniCart = document.getElementById('mini-cart');
+            if (cart.length === 0) {
+                miniCart.innerHTML = '<p class="text-center py-4">Корзина пуста</p>';
+            } else {
+                miniCart.innerHTML = cart.slice(0, 3).map(item => `
+                    <div class="flex items-center mb-3">
+                        <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded">
+                        <div class="ml-2 flex-grow">
+                            <p class="text-sm font-medium truncate">${item.name}</p>
+                            <p class="text-xs text-gray-600">${item.quantity} × ${item.price} руб.</p>
+                        </div>
+                    </div>
+                `).join('');
+                
+                if (cart.length > 3) {
+                    miniCart.innerHTML += `<p class="text-xs text-center mt-2">И еще ${cart.length - 3} товаров</p>`;
+                }
+                
+                miniCart.innerHTML += `
+                    <div class="mt-4 pt-2 border-t border-gray-200">
+                        <p class="text-sm font-medium flex justify-between">
+                            <span>Итого:</span>
+                            <span>${grandTotal.toFixed(2)} руб.</span>
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Open cart modal
+        cartIcon.addEventListener('click', function(e) {
+            if (!e.target.closest('.group-hover\\:opacity-100')) {
+                cartModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        // Close cart modal
+        closeCart.addEventListener('click', function() {
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Clear cart
+        clearCartBtn.addEventListener('click', function() {
+            cart = [];
+            updateCart();
+            showNotification('Корзина очищена');
+        });
+
+        // Checkout button
+        checkoutBtn.addEventListener('click', function() {
+            checkoutForm.classList.toggle('hidden');
+        });
+
+        // Order form submission
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would normally send the order to your server
+            const formData = new FormData(this);
+            const orderData = {
+                items: cart,
+                customer: {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    comment: formData.get('comment')
+                }
+            };
+            
+            console.log('Order submitted:', orderData);
+            
+            // Show success message
+            showNotification('Заказ успешно отправлен! Мы свяжемся с вами в ближайшее время.');
+            
+            // Reset cart and close modal
+            cart = [];
+            updateCart();
+            checkoutForm.classList.add('hidden');
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            orderForm.reset();
+        });
+
+        // Карусель акций в шапке
+        let currentHeaderSlide = 0;
+        const headerSlides = document.querySelectorAll('.header-carousel-slide');
+        const headerIndicators = document.querySelectorAll('.header-carousel-indicator');
+        const totalHeaderSlides = headerSlides.length;
+
+        function showHeaderSlide(index) {
+            // Hide all slides
+            headerSlides.forEach(slide => slide.classList.remove('active'));
+            headerIndicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Show the selected slide
+            headerSlides[index].classList.add('active');
+            headerIndicators[index].classList.add('active');
+            currentHeaderSlide = index;
+        }
+
+        // Next slide
+        document.querySelector('.header-carousel-control.next').addEventListener('click', function() {
+            let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
+            showHeaderSlide(nextSlide);
+        });
+
+        // Previous slide
+        document.querySelector('.header-carousel-control.prev').addEventListener('click', function() {
+            let prevSlide = (currentHeaderSlide - 1 + totalHeaderSlides) % totalHeaderSlides;
+            showHeaderSlide(prevSlide);
+        });
+
+        // Add click events to indicators
+        headerIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', function() {
+                showHeaderSlide(index);
+            });
+        });
+
+        // Auto advance slides
+        setInterval(() => {
+            let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
+            showHeaderSlide(nextSlide);
+        }, 5000);
+
+        // Initialize cart
+        updateCart();
+    </script>
 </body>
 </html>
