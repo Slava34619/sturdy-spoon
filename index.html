@@ -66,31 +66,47 @@
         }
         
         /* Стили для карусели в шапке */
-       .header-carousel-container {
-        position: relative;
-        width: 100%;
-        height: 250px; /* Уменьшена высота */
-        overflow: hidden;
-        border-radius: 0.5rem;
-        background: white;
-        margin: 0 auto; /* Центрирование */
-        max-width: 600px; /* Ограничение максимальной ширины */
-    }
+        .header-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            min-height: 250px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            background: white;
+            margin: 0 auto;
+            max-width: 600px;
+        }
 
     .header-carousel-slide {
-    display: none;
-    width: 100%;
-    height: 100%;
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+.header-carousel-slide h3 {
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    line-height: 1.2;
 }
-       .header-carousel-slide.active {
-    display: flex; /* Измените на flex */
-    animation: fadeIn 1s;
+
+.header-carousel-slide p {
+    color: #000;
+    margin: 2px 0;
+    line-height: 1.2;
 }
-		.header-carousel-slide img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain; /* Единообразное отображение */
+
+.header-carousel-slide .line-through {
+    color: #666;
+    font-size: 13px;
 }
+
         @keyframes fadeIn {
             from { opacity: 0.4; }
             to { opacity: 1; }
@@ -169,18 +185,25 @@
 }
 
 		 /* Для мобильных устройств */
-    @media (max-width: 768px) {
-        .header-carousel-container {
-            height: 200px; /* Еще меньше на мобильных */
-            max-width: 100%; /* На всю ширину на мобильных */
-        }
+@media (max-width: 768px) {
+    .header-carousel-slide .absolute {
+        padding: 10px;
+        min-height: 45%;
     }
     
-    .header-carousel-slide img {
-        max-height: 90%;
-        max-width: 90%;
+    .header-carousel-slide h3 {
+        font-size: 14px;
+    }
+    
+    .header-carousel-slide p {
+        font-size: 12px;
+    }
+    
+    .header-carousel-slide .text-2xl {
+        font-size: 18px;
     }
 }
+
     </style>
 </head>
 <body class="bg-gray-50">
@@ -264,68 +287,68 @@
                     </button>
                 </div>
                 
-               <!-- Правая часть - карусель акционных товаров -->
+              <!-- Правая часть - карусель акционных товаров -->
 <div class="md:w-3/5 mx-auto" style="max-width: 600px;">
-    <div class="header-carousel-container style="height: 250px;"">
-        <!-- Slide 1 -->
-        <div class="header-carousel-slide active relative flex items-center justify-center bg-white">
-            <img src="images/СВС Двойной латексный облив глубокое макание 3 4.jpeg" 
-                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-            <div class="discount-badge">-20%</div>
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-50 to-transparent p-4">
-                <h3 class="text-xl font-bold">Перчатки двойной облив ¾</h3>
-                <p class="line-through">70 руб.</p>
-                <p class="text-2xl font-bold">59 руб.</p>
-            </div>
-        </div>
-        
-        <!-- Slide 2 -->
-        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
-            <img src="images/Перчаткиб с пвх.png" 
-                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-            <div class="discount-badge">-15%</div>
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-50 to-transparent p-4">
-                <h3 class="text-xl font-bold">Перчатки ХБ</h3>
-                <p class="line-through">100 руб.</p>
-                <p class="text-2xl font-bold">85 руб.</p>
-            </div>
-        </div>
-        
-        <!-- Slide 3 -->
-        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
-            <img src="images/Верхонки с брезентовым наладонником рабочие.jpg" 
-                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-            <div class="discount-badge">-25%</div>
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-50 to-transparent p-4">
-                <h3 class="text-xl font-bold">Верхонки</h3>
-                <p class="line-through">200 руб.</p>
-                <p class="text-2xl font-bold">150 руб.</p>
-            </div>
-        </div>
-        
-        <!-- Slide 4 -->
-        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
-            <img src="images/вафельное полотно вафельная ткань.jpg" 
-                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-            <div class="discount-badge">-25%</div>
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-50 to-transparent p-4">
-                <h3 class="text-xl font-bold">Вафельное полотно</h3>
-                <p class="line-through">120 руб.</p>
-                <p class="text-2xl font-bold">80 руб.</p>
-            </div>
-        </div>
-        
-        <!-- Slide 5 -->
-        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
-            <img src="images/Комбинезон Lakeland MicroMax NS р. 2XL.png" 
-                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-            <div class="discount-badge">-25%</div>
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-50 to-transparent p-4">
-                <h3 class="text-xl font-bold">Комбинезоны MicroMAX NS р. XXL</h3>
-                <p class="line-through">1200 руб.</p>
-                <p class="text-2xl font-bold">750 руб.</p>
-            </div>
-        </div>
+    <div class="header-carousel-container" style="height: 250px;">
+       <!-- Slide 1 - УЖЕ ПРАВИЛЬНО -->
+<div class="header-carousel-slide active relative flex items-center justify-center bg-white">
+    <img src="images/СВС Двойной латексный облив глубокое макание 3 4.jpeg" 
+         alt="Акционный товар" class="max-h-full max-w-full object-contain">
+    <div class="discount-badge">-20%</div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 flex flex-col justify-end">
+        <h3 class="text-xl font-bold text-black">Перчатки двойной облив ¾</h3>
+        <p class="line-through text-gray-600">70 руб.</p>
+        <p class="text-2xl font-bold text-black">59 руб.</p>
+    </div>
+</div>
+
+<!-- Slide 2 - ИСПРАВИТЬ -->
+<div class="header-carousel-slide relative flex items-center justify-center bg-white">
+    <img src="images/Перчаткиб с пвх.png" 
+         alt="Акционный товар" class="max-h-full max-w-full object-contain">
+    <div class="discount-badge">-15%</div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 flex flex-col justify-end">
+        <h3 class="text-xl font-bold text-black">Перчатки ХБ</h3>
+        <p class="line-through text-gray-600">100 руб.</p>
+        <p class="text-2xl font-bold text-black">85 руб.</p>
+    </div>
+</div>
+
+<!-- Slide 3 - ИСПРАВИТЬ -->
+<div class="header-carousel-slide relative flex items-center justify-center bg-white">
+    <img src="images/Верхонки с брезентовым наладонником рабочие.jpg" 
+         alt="Акционный товар" class="max-h-full max-w-full object-contain">
+    <div class="discount-badge">-25%</div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 flex flex-col justify-end">
+        <h3 class="text-xl font-bold text-black">Верхонки</h3>
+        <p class="line-through text-gray-600">200 руб.</p>
+        <p class="text-2xl font-bold text-black">150 руб.</p>
+    </div>
+</div>
+
+<!-- Slide 4 - ИСПРАВИТЬ -->
+<div class="header-carousel-slide relative flex items-center justify-center bg-white">
+    <img src="images/вафельное полотно вафельная ткань.jpg" 
+         alt="Акционный товар" class="max-h-full max-w-full object-contain">
+    <div class="discount-badge">-25%</div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 flex flex-col justify-end">
+        <h3 class="text-xl font-bold text-black">Вафельное полотно</h3>
+        <p class="line-through text-gray-600">120 руб.</p>
+        <p class="text-2xl font-bold text-black">80 руб.</p>
+    </div>
+</div>
+
+<!-- Slide 5 - ИСПРАВИТЬ -->
+<div class="header-carousel-slide relative flex items-center justify-center bg-white">
+    <img src="images/Комбинезон Lakeland MicroMax NS р. 2XL.png" 
+         alt="Акционный товар" class="max-h-full max-w-full object-contain">
+    <div class="discount-badge">-25%</div>
+    <div class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 flex flex-col justify-end">
+        <h3 class="text-xl font-bold text-black">Комбинезоны MicroMAX NS р. XXL</h3>
+        <p class="line-through text-gray-600">1200 руб.</p>
+        <p class="text-2xl font-bold text-black">750 руб.</p>
+    </div>
+</div>
         
         <!-- Controls -->
         <button class="header-carousel-control prev">
@@ -337,11 +360,11 @@
         
         <!-- Indicators -->
         <div class="header-carousel-indicators">
-            <div class="header-carousel-indicator active"></div>
-            <div class="header-carousel-indicator"></div>
-            <div class="header-carousel-indicator"></div>
-            <div class="header-carousel-indicator"></div>
-            <div class="header-carousel-indicator"></div>
+            <div class="header-carousel-indicator active" data-index="0"></div>
+            <div class="header-carousel-indicator" data-index="1"></div>
+            <div class="header-carousel-indicator" data-index="2"></div>
+            <div class="header-carousel-indicator" data-index="3"></div>
+            <div class="header-carousel-indicator" data-index="4"></div>
         </div>
     </div>
 </div>
@@ -956,50 +979,54 @@
             orderForm.reset();
         });
 
-        // Карусель акций в шапке
-        let currentHeaderSlide = 0;
-        const headerSlides = document.querySelectorAll('.header-carousel-slide');
-        const headerIndicators = document.querySelectorAll('.header-carousel-indicator');
-        const totalHeaderSlides = headerSlides.length;
+// Карусель акций в шапке - ИСПРАВЛЕННЫЙ КОД
+let currentHeaderSlide = 0;
+const headerSlides = document.querySelectorAll('.header-carousel-slide');
+const headerIndicators = document.querySelectorAll('.header-carousel-indicator');
+const totalHeaderSlides = headerSlides.length;
 
-        function showHeaderSlide(index) {
-            // Hide all slides
-            headerSlides.forEach(slide => slide.classList.remove('active'));
-            headerIndicators.forEach(indicator => indicator.classList.remove('active'));
-            
-            // Show the selected slide
-            headerSlides[index].classList.add('active');
-            headerIndicators[index].classList.add('active');
-            currentHeaderSlide = index;
-        }
+function showHeaderSlide(index) {
+    // Hide all slides
+    headerSlides.forEach(slide => {
+        slide.classList.remove('active');
+        slide.style.display = 'none';
+    });
+    headerIndicators.forEach(indicator => indicator.classList.remove('active'));
+    
+    // Show the selected slide
+    headerSlides[index].classList.add('active');
+    headerSlides[index].style.display = 'flex';
+    headerIndicators[index].classList.add('active');
+    currentHeaderSlide = index;
+}
 
-        // Next slide
-        document.querySelector('.header-carousel-control.next').addEventListener('click', function() {
-            let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
-            showHeaderSlide(nextSlide);
-        });
+// Next slide
+document.querySelector('.header-carousel-control.next').addEventListener('click', function() {
+    let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
+    showHeaderSlide(nextSlide);
+});
 
-        // Previous slide
-        document.querySelector('.header-carousel-control.prev').addEventListener('click', function() {
-            let prevSlide = (currentHeaderSlide - 1 + totalHeaderSlides) % totalHeaderSlides;
-            showHeaderSlide(prevSlide);
-        });
+// Previous slide
+document.querySelector('.header-carousel-control.prev').addEventListener('click', function() {
+    let prevSlide = (currentHeaderSlide - 1 + totalHeaderSlides) % totalHeaderSlides;
+    showHeaderSlide(prevSlide);
+});
 
-        // Add click events to indicators
-        headerIndicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', function() {
-                showHeaderSlide(index);
-            });
-        });
+// Add click events to indicators
+headerIndicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', function() {
+        showHeaderSlide(index);
+    });
+});
 
-        // Auto advance slides
-        setInterval(() => {
-            let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
-            showHeaderSlide(nextSlide);
-        }, 5000);
+// Auto advance slides
+setInterval(() => {
+    let nextSlide = (currentHeaderSlide + 1) % totalHeaderSlides;
+    showHeaderSlide(nextSlide);
+}, 5000);
 
-        // Initialize cart
-        updateCart();
+// Initialize carousel
+showHeaderSlide(0);
     </script>
 </body>
 </html>
