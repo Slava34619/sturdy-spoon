@@ -66,23 +66,29 @@
         }
         
         /* Стили для карусели в шапке */
-        .header-carousel-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            border-radius: 0.5rem;
-        }
-      .header-carousel-slide {
-            display: none;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .header-carousel-slide.active {
-            display: block;
-            animation: fadeIn 1s;
-        }
+       .header-carousel-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: white; /* Добавьте белый фон */
+}
+
+    .header-carousel-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+       .header-carousel-slide.active {
+    display: flex; /* Измените на flex */
+    animation: fadeIn 1s;
+}
+		.header-carousel-slide img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* Единообразное отображение */
+}
         @keyframes fadeIn {
             from { opacity: 0.4; }
             to { opacity: 1; }
@@ -158,6 +164,18 @@
   font-size: 14px;
   margin-top: -8px;
   margin-bottom: 16px;
+}
+
+		/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .header-carousel-container {
+        height: 250px;
+    }
+    
+    .header-carousel-slide img {
+        max-height: 90%;
+        max-width: 90%;
+    }
 }
     </style>
 </head>
@@ -242,86 +260,87 @@
                     </button>
                 </div>
                 
-                <!-- Правая часть - карусель акционных товаров -->
-                <div class="md:w-3/5">
-                    <div class="header-carousel-container">
-                        <!-- Slide 1 -->
-                        <div class="header-carousel-slide active relative">
-                            <img src="images/СВС Двойной латексный облив глубокое макание 3 4.jpeg" 
-                                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
-                            <div class="discount-badge">-20%</div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h3 class="text-xl font-bold">Перчатки двойной облив ¾</h3>
-                                <p class="line-through">70 руб.</p>
-                                <p class="text-2xl font-bold">59 руб.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Slide 2 -->
-                        <div class="header-carousel-slide relative">
-                            <img src="images/Перчаткиб с пвх.png" 
-                                 alt="Акционный товар" class="w-full h-full object-cover">
-                            <div class="discount-badge">-15%</div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h3 class="text-xl font-bold">Перчатки ХБ</h3>
-                                <p class="line-through">100 руб.</p>
-                                <p class="text-2xl font-bold">85 руб.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Slide 3 -->
-                        <div class="header-carousel-slide relative">
-                            <img src="images/Верхонки с брезентовым наладонником рабочие.jpg" 
-                                 alt="Акционный товар" class="w-full h-full object-cover">
-                            <div class="discount-badge">-25%</div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h3 class="text-xl font-bold">Верхонки</h3>
-                                <p class="line-through">200 руб.</p>
-                                <p class="text-2xl font-bold">150 руб.</p>
-                            </div>
-                        </div>
-						<!-- Slide 4 -->
-                        <div class="header-carousel-slide relative">
-                            <img src="images/вафельное полотно вафельная ткань.jpg" 
-                                 alt="Акционный товар" class="w-full h-full object-cover">
-                            <div class="discount-badge">-25%</div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h3 class="text-xl font-bold">Вафельное полотно</h3>
-                                <p class="line-through">120 руб.</p>
-                                <p class="text-2xl font-bold">80 руб.</p>
-                            </div>
-                        </div>
-						<!-- Slide 5 -->
-                        <div class="header-carousel-slide relative">
-                            <img src="images/Комбинезон Lakeland MicroMax NS р. 2XL.png" 
-                                 alt="Акционный товар" class="w-full h-full object-cover">
-                            <div class="discount-badge">-25%</div>
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                                <h3 class="text-xl font-bold">Комбинезоны MicroMAX NS р. XXL</h3>
-                                <p class="line-through">1200 руб.</p>
-                                <p class="text-2xl font-bold">750 руб.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Controls -->
-                        <button class="header-carousel-control prev">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="header-carousel-control next">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                        
-                        <!-- Indicators -->
-                        <div class="header-carousel-indicators">
-                            <div class="header-carousel-indicator active"></div>
-                            <div class="header-carousel-indicator"></div>
-                            <div class="header-carousel-indicator"></div>
-							<div class="header-carousel-indicator"></div>
-							<div class="header-carousel-indicator"></div>
-                        </div>
-                    </div>
-                </div>
+               <!-- Правая часть - карусель акционных товаров -->
+<div class="md:w-3/5">
+    <div class="header-carousel-container">
+        <!-- Slide 1 -->
+        <div class="header-carousel-slide active relative flex items-center justify-center bg-white">
+            <img src="images/СВС Двойной латексный облив глубокое макание 3 4.jpeg" 
+                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
+            <div class="discount-badge">-20%</div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                <h3 class="text-xl font-bold">Перчатки двойной облив ¾</h3>
+                <p class="line-through">70 руб.</p>
+                <p class="text-2xl font-bold">59 руб.</p>
             </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
+            <img src="images/Перчаткиб с пвх.png" 
+                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
+            <div class="discount-badge">-15%</div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                <h3 class="text-xl font-bold">Перчатки ХБ</h3>
+                <p class="line-through">100 руб.</p>
+                <p class="text-2xl font-bold">85 руб.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
+            <img src="images/Верхонки с брезентовым наладонником рабочие.jpg" 
+                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
+            <div class="discount-badge">-25%</div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                <h3 class="text-xl font-bold">Верхонки</h3>
+                <p class="line-through">200 руб.</p>
+                <p class="text-2xl font-bold">150 руб.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4 -->
+        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
+            <img src="images/вафельное полотно вафельная ткань.jpg" 
+                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
+            <div class="discount-badge">-25%</div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                <h3 class="text-xl font-bold">Вафельное полотно</h3>
+                <p class="line-through">120 руб.</p>
+                <p class="text-2xl font-bold">80 руб.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 5 -->
+        <div class="header-carousel-slide relative flex items-center justify-center bg-white">
+            <img src="images/Комбинезон Lakeland MicroMax NS р. 2XL.png" 
+                 alt="Акционный товар" class="max-h-full max-w-full object-contain">
+            <div class="discount-badge">-25%</div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                <h3 class="text-xl font-bold">Комбинезоны MicroMAX NS р. XXL</h3>
+                <p class="line-through">1200 руб.</p>
+                <p class="text-2xl font-bold">750 руб.</p>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <button class="header-carousel-control prev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="header-carousel-control next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Indicators -->
+        <div class="header-carousel-indicators">
+            <div class="header-carousel-indicator active"></div>
+            <div class="header-carousel-indicator"></div>
+            <div class="header-carousel-indicator"></div>
+            <div class="header-carousel-indicator"></div>
+            <div class="header-carousel-indicator"></div>
+        </div>
+    </div>
+</div>
             
             <!-- Для мобильных устройств - обычный заголовок -->
             <div class="md:hidden text-center">
@@ -980,6 +999,7 @@
     </script>
 </body>
 </html>
+
 
 
 
