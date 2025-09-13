@@ -278,7 +278,39 @@
         font-size: 18px;
     }
 }
+/* Для категорий на мобильных устройствах */
+@media (max-width: 768px) {
+    #categories .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .category-bg {
+        height: 180px; /* Немного меньше высота для мобильных */
+    }
+    
+    .category-bg h3 {
+        font-size: 16px; /* Меньший размер шрифта */
+        text-align: center;
+        padding: 0 0.5rem;
+    }
+}
 
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    #categories .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .category-bg {
+        height: 150px;
+    }
+    
+    .category-bg h3 {
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 <body class="bg-gray-50">
@@ -510,7 +542,7 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Категории товаров</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Category 1 -->
                 <a href="rubber.html" class="category-card block rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
                     <div class="category-bg h-48 flex items-center justify-center" style="background-image: url('images/СВС Двойной латексный облив глубокое макание 3 4.jpeg')">
@@ -1140,3 +1172,14 @@ showHeaderSlide(0);
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
