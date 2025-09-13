@@ -204,6 +204,30 @@
     }
 }
 
+@media (max-width: 768px) {
+    #popular-products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .product-card {
+        padding: 1rem;
+    }
+    
+    .product-card h3 {
+        font-size: 14px;
+    }
+    
+    .product-card p {
+        font-size: 12px;
+    }
+    
+    .product-card .text-xl {
+        font-size: 18px;
+    }
+}
+
+
     </style>
 </head>
 <body class="bg-gray-50">
@@ -498,7 +522,7 @@
     <section id="popular" class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Популярные товары</h2>
-            <div id="popular-products" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div id="popular-products" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- Товар 1 -->
                 <div class="bg-white rounded-lg shadow-md p-4 flex flex-col product-card">
                     <img src="images/двойной облив ¾ красные.png" alt="Перчатки двойной облив ¾" class="mb-4 rounded h-48 object-contain">
@@ -1030,14 +1054,3 @@ showHeaderSlide(0);
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
